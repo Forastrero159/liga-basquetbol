@@ -1,23 +1,20 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Nuevo Equipo</title>
-    <style>
-        body { font-family: Arial; background: #f3f4f6; }
-        .contenedor { width: 50%; margin: 40px auto; background: white; padding: 25px; border-radius: 10px; }
-        input { width: 100%; padding: 10px; margin: 8px 0; }
-        button, a { padding: 10px 14px; background: #2563eb; color: white; border: none; border-radius: 5px; text-decoration: none; }
-    </style>
-</head>
-<body>
-<div class="contenedor">
-    <h1>Registrar Equipo</h1>
+@extends('layouts.app')
 
-    <form action="{{ route('equipos.store') }}" method="POST">
+@section('titulo', 'Nuevo Equipo | Liga de Básquetbol')
+
+@section('contenido')
+<div class="contenedor">
+    <div class="encabezado">
+        <div>
+            <h1>🏀 Registrar Equipo</h1>
+            <p class="subtitulo">Agrega un nuevo equipo participante de la liga.</p>
+        </div>
+    </div>
+
+    <form action="{{ route('equipos.store') }}" method="POST" class="formulario">
         @csrf
 
-        <label>Nombre:</label>
+        <label>Nombre del equipo:</label>
         <input type="text" name="nombre" required>
 
         <label>Ciudad:</label>
@@ -26,9 +23,8 @@
         <label>Entrenador:</label>
         <input type="text" name="entrenador">
 
-        <button type="submit">Guardar</button>
-        <a href="{{ route('equipos.index') }}">Volver</a>
+        <button type="submit" class="btn btn-principal">Guardar equipo</button>
+        <a href="{{ route('equipos.index') }}" class="btn btn-secundario">Volver</a>
     </form>
 </div>
-</body>
-</html>
+@endsection

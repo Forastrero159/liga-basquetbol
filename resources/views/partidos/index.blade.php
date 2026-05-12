@@ -1,36 +1,30 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Partidos</title>
-    <style>
-        body { font-family: Arial; background: #f3f4f6; }
-        .contenedor { width: 90%; margin: 30px auto; background: white; padding: 25px; border-radius: 10px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ccc; padding: 10px; text-align: center; }
-        th { background: #1f2937; color: white; }
-        a, button { padding: 8px 12px; background: #2563eb; color: white; border: none; border-radius: 5px; text-decoration: none; cursor: pointer; }
-        .eliminar { background: #dc2626; }
-        .volver { background: #374151; }
-    </style>
-</head>
-<body>
-<div class="contenedor">
-    <h1>Gestión de Partidos</h1>
+@extends('layouts.app')
 
-    <a href="{{ route('inicio') }}" class="volver">Inicio</a>
-    <a href="{{ route('partidos.create') }}">Nuevo partido</a>
+@section('titulo', 'Partidos | Liga de Básquetbol')
+
+@section('contenido')
+<div class="contenedor">
+    <div class="encabezado">
+        <div>
+            <h1>🔥 Gestión de Partidos</h1>
+            <p class="subtitulo">Registra encuentros, marcadores, estados y resultados de la liga.</p>
+        </div>
+
+        <div class="acciones">
+            <a href="{{ route('partidos.create') }}" class="btn btn-principal">+ Nuevo partido</a>
+        </div>
+    </div>
 
     @if(session('success'))
-        <p>{{ session('success') }}</p>
+        <div class="mensaje">{{ session('success') }}</div>
     @endif
 
     <table>
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Equipo Local</th>
-                <th>Equipo Visitante</th>
+                <th>Local</th>
+                <th>Visitante</th>
                 <th>Fecha</th>
                 <th>Marcador</th>
                 <th>Estado</th>
@@ -57,12 +51,12 @@
                         @endif
                     </td>
                     <td>
-                        <a href="{{ route('partidos.edit', $partido) }}">Editar</a>
+                        <a href="{{ route('partidos.edit', $partido) }}" class="btn btn-editar">Editar</a>
 
                         <form action="{{ route('partidos.destroy', $partido) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button class="eliminar" onclick="return confirm('¿Eliminar partido?')">Eliminar</button>
+                            <button class="btn btn-eliminar" onclick="return confirm('¿Eliminar partido?')">Eliminar</button>
                         </form>
                     </td>
                 </tr>
@@ -70,5 +64,4 @@
         </tbody>
     </table>
 </div>
-</body>
-</html>
+@endsection

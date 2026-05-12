@@ -1,20 +1,17 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Editar Partido</title>
-    <style>
-        body { font-family: Arial; background: #f3f4f6; }
-        .contenedor { width: 50%; margin: 40px auto; background: white; padding: 25px; border-radius: 10px; }
-        input, select { width: 100%; padding: 10px; margin: 8px 0; }
-        button, a { padding: 10px 14px; background: #2563eb; color: white; border: none; border-radius: 5px; text-decoration: none; }
-    </style>
-</head>
-<body>
-<div class="contenedor">
-    <h1>Editar Partido</h1>
+@extends('layouts.app')
 
-    <form action="{{ route('partidos.update', $partido) }}" method="POST">
+@section('titulo', 'Editar Partido | Liga de Básquetbol')
+
+@section('contenido')
+<div class="contenedor">
+    <div class="encabezado">
+        <div>
+            <h1>✏️ Editar Partido</h1>
+            <p class="subtitulo">Actualiza equipos, marcador, fecha o estado del encuentro.</p>
+        </div>
+    </div>
+
+    <form action="{{ route('partidos.update', $partido) }}" method="POST" class="formulario">
         @csrf
         @method('PUT')
 
@@ -52,9 +49,8 @@
             <option value="Suspendido" {{ $partido->estado == 'Suspendido' ? 'selected' : '' }}>Suspendido</option>
         </select>
 
-        <button type="submit">Actualizar</button>
-        <a href="{{ route('partidos.index') }}">Volver</a>
+        <button type="submit" class="btn btn-principal">Actualizar partido</button>
+        <a href="{{ route('partidos.index') }}" class="btn btn-secundario">Volver</a>
     </form>
 </div>
-</body>
-</html>
+@endsection

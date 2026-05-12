@@ -1,20 +1,17 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Editar Jugador</title>
-    <style>
-        body { font-family: Arial; background: #f3f4f6; }
-        .contenedor { width: 50%; margin: 40px auto; background: white; padding: 25px; border-radius: 10px; }
-        input, select { width: 100%; padding: 10px; margin: 8px 0; }
-        button, a { padding: 10px 14px; background: #2563eb; color: white; border: none; border-radius: 5px; text-decoration: none; }
-    </style>
-</head>
-<body>
-<div class="contenedor">
-    <h1>Editar Jugador</h1>
+@extends('layouts.app')
 
-    <form action="{{ route('jugadores.update', $jugador) }}" method="POST">
+@section('titulo', 'Editar Jugador | Liga de Básquetbol')
+
+@section('contenido')
+<div class="contenedor">
+    <div class="encabezado">
+        <div>
+            <h1>✏️ Editar Jugador</h1>
+            <p class="subtitulo">Actualiza la información del jugador seleccionado.</p>
+        </div>
+    </div>
+
+    <form action="{{ route('jugadores.update', $jugador) }}" method="POST" class="formulario">
         @csrf
         @method('PUT')
 
@@ -27,7 +24,7 @@
             @endforeach
         </select>
 
-        <label>Nombre:</label>
+        <label>Nombre del jugador:</label>
         <input type="text" name="nombre" value="{{ $jugador->nombre }}" required>
 
         <label>Posición:</label>
@@ -39,9 +36,8 @@
         <label>Edad:</label>
         <input type="number" name="edad" value="{{ $jugador->edad }}">
 
-        <button type="submit">Actualizar</button>
-        <a href="{{ route('jugadores.index') }}">Volver</a>
+        <button type="submit" class="btn btn-principal">Actualizar jugador</button>
+        <a href="{{ route('jugadores.index') }}" class="btn btn-secundario">Volver</a>
     </form>
 </div>
-</body>
-</html>
+@endsection
