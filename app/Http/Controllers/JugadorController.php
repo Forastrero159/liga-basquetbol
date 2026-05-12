@@ -3,63 +3,67 @@
 namespace App\Http\Controllers;
 
 use App\Models\Jugador;
+use App\Models\Equipo;
 use Illuminate\Http\Request;
 
 class JugadorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $jugadores = Jugador::with('equipo')->get();
+        return view('jugadores.index', compact('jugadores'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $equipos = Equipo::all();
+        return view('jugadores.create', compact('equipos'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'equipo_id' => 'required',
+            'nombre' => 'required',
+            'posicion' => 'nullable',
+            'numero' => 'nullable|integer',
+            'edad' => 'nullable|integer'
+        ]);
+
+        Jugador::create($request->all());
+
+        return redirect()->route('jugadores.index')->with('success', 'Jugador registrado correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Jugador $jugador)
+    public function edit(Jugador $jugadore)
     {
-        //
+        $jugador = $jugadore;
+        $equipos = Equipo::all();
+
+        return view('jugadores.edit', compact('jugador', 'equipos'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Jugador $jugador)
+    public function update(Request $request, Jugador $jugadore)
     {
-        //
+        $jugador = $jugadore;
+
+        $request->validate([
+            'equipo_id' => 'required',
+            'nombre' => 'required',
+            'posicion' => 'nullable',
+            'numero' => 'nullable|integer',
+            'edad' => 'nullable|integer'
+        ]);
+
+        $jugador->update($request->all());
+
+        return redirect()->route('jugadores.index')->with('success', 'Jugador actualizado correctamente.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Jugador $jugador)
+    public function destroy(Jugador $jugadore)
     {
-        //
-    }
+        $jugadore->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Jugador $jugador)
-    {
-        //
+        return redirect()->route('jugadores.index')->with('success', 'Jugador eliminado correctamente.');
     }
 }
