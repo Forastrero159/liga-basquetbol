@@ -6,5 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Equipo extends Model
 {
-    //
+    protected $fillable = [
+        'nombre',
+        'ciudad',
+        'entrenador'
+    ];
+
+    public function jugadores()
+    {
+        return $this->hasMany(Jugador::class);
+    }
 }
